@@ -88,6 +88,11 @@ spec:
                 configMapKeyRef:
                   name: storedog-config
                   key: NEXT_PUBLIC_SPREE_ALLOWED_IMAGE_DOMAIN
+            - name: NEXT_PUBLIC_DD_VERSION_FRONTEND
+              valueFrom:
+                configMapKeyRef:
+                  name: storedog-config
+                  key: NEXT_PUBLIC_DD_VERSION_FRONTEND
             - name: NEXT_PUBLIC_DD_ENV
               valueFrom:
                 configMapKeyRef:
