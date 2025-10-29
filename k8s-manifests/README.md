@@ -149,7 +149,7 @@ export DD_VERSION_NGINX=1.28.0
 export NEXT_PUBLIC_DD_VERSION_FRONTEND=1.0.0
 ```
 
-The Datadog environment variable `DD_ENV` is set in two places. Update both values as needed.
+The Datadog environment variable `DD_ENV` is set in two places. Update both values as needed. The commands below uses `envsubst` to update the variable values in place before applying the definition file.
 
 * The `datadog/datadog-agent.yaml` file on line 19.
 * The `storedog-app/configmaps/storedog-config.yaml` file on line 22.
@@ -175,15 +175,15 @@ kubectl create secret generic datadog-secret \
   --from-literal app-key=$DD_APP_KEY
 ```
 
-3. Apply the Datadog Agent definition:
+3. Apply the Datadog Agent definition and use `envsubst` to substitute the environment variable in the definition file.
 
 ```bash
-kubectl apply -f k8s-manifests/datadog/datadog-agent.yaml
+envsubst '$DD_ENV' < k8s-manifests/datadog/datadog-agent.yaml | kubectl apply -f -
 ```
 
 ### Deploy Cluster Setup and Storedog
 
-The storedog-app definition files contain variables which need to be set before applying them to the cluster. The command below uses `envsubst` to update the variable values in place before applying the definition file.
+The storedog-app definition files contain variables which need to be set before applying them to the cluster. The command below uses `envsubst` to substitute the environment variable in the definition file.
 
 1. **Deploy Cluster Components (one-time setup per cluster):**
 
@@ -210,8 +210,8 @@ The following command creates a Kubernetes secret with your Datadog RUM app id a
 
 ```bash
 kubectl create secret generic datadog-secret \
-  --from-literal=dd_application_id=${DD_APPLICATION_ID} \
-  --from-literal=dd_client_token=${DD_CLIENT_TOKEN} \
+  --from-literal=dd_application_id=$DD_APPLICATION_ID \
+  --from-literal=dd_client_token=$DD_CLIENT_TOKEN \
   -n storedog
 ```
 
