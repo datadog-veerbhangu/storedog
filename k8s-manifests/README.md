@@ -171,8 +171,8 @@ helm install datadog-operator datadog/datadog-operator
 
 ```bash
 kubectl create secret generic datadog-secret \
-  --from-literal api-key=$DD_API_KEY \
-  --from-literal app-key=$DD_APP_KEY
+  --from-literal api-key=${DD_API_KEY} \
+  --from-literal app-key=${DD_APP_KEY}
 ```
 
 3. Apply the Datadog Agent definition and use `envsubst` to substitute the environment variable in the definition file.
