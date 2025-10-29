@@ -178,7 +178,7 @@ kubectl create secret generic datadog-secret \
 3. Apply the Datadog Agent definition and use `envsubst` to substitute the environment variable in the definition file.
 
 ```bash
-envsubst '$DD_ENV' < k8s-manifests/datadog/datadog-agent.yaml | kubectl apply -f -
+envsubst < k8s-manifests/datadog/datadog-agent.yaml | kubectl apply -f -
 ```
 
 ### Deploy Cluster Setup and Storedog
@@ -210,8 +210,8 @@ The following command creates a Kubernetes secret with your Datadog RUM app id a
 
 ```bash
 kubectl create secret generic datadog-secret \
-  --from-literal=dd_application_id=$DD_APPLICATION_ID \
-  --from-literal=dd_client_token=$DD_CLIENT_TOKEN \
+  --from-literal=dd_application_id=${DD_APPLICATION_ID} \
+  --from-literal=dd_client_token=${DD_CLIENT_TOKEN} \
   -n storedog
 ```
 
