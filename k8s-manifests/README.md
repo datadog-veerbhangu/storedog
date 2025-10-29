@@ -105,6 +105,7 @@ The deployment process uses several environment variables to template image loca
 |-------------------------------|---------------------------------------------|---------------------------------|
 | `REGISTRY_URL`                | Container registry base URL                 | `localhost:5000`               |
 | `SD_TAG`                      | Storedog image tag/version                  | `latest`                       |
+| `DD_ENV`                      | Datadog environment                         | `storedog-k8s`                 |
 | `DD_VERSION_ADS`              | Version tag for ads service                 | `1.0.0`                        |
 | `DD_VERSION_ADS_PYTHON`       | Version tag for ads Python service (optional) | `1.0.0`                        |
 | `DD_VERSION_BACKEND`          | Version tag for backend & worker services   | `1.0.0`                        |
