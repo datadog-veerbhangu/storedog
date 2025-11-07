@@ -158,9 +158,33 @@ services:
       - DD_VERSION=${DD_VERSION_NGINX:-1.28.0}
     labels:
       com.datadoghq.ad.logs: '[{"source": "nginx"}]'
-      com.datadoghq.ad.check_names: '["nginx"]'
-      com.datadoghq.ad.init_configs: '[{}]'
-      com.datadoghq.ad.instances: '[{"nginx_status_url": "http://%%host%%:81/nginx_status/"}]'
+      # Filtering with exclude
+      # com.datadoghq.ad.logs: '[{
+      #   "source": "nginx",
+      #   "service": "store-nginx",
+      #   "log_processing_rules": [
+      #     {
+      #       "type": "exclude_at_match",
+      #       "name": "no_images",
+      #       "pattern": ".*GET /_next/image.*"
+      #     }
+      #   ]
+      #   }]'
+      # Filtering with include: only logs about fetching images from the nginx service.
+      # com.datadoghq.ad.logs: '[{
+      #   "source": "nginx",
+      #   "service": "store-nginx",
+      #   "log_processing_rules": [
+      #     {
+      #       "type": "include_at_match",
+      #       "name": "only_images",
+      #       "pattern": ".*GET /_next/image.*"
+      #     }
+      #   ]
+      #   }]'
+      #     com.datadoghq.ad.check_names: '["nginx"]'
+      #     com.datadoghq.ad.init_configs: '[{}]'
+      #     com.datadoghq.ad.instances: '[{"nginx_status_url": "http://%%host%%:81/nginx_status/"}]'
   postgres:
     image: ghcr.io/datadog/storedog/postgres:${STOREDOG_IMAGE_VERSION:-latest}
     restart: always
