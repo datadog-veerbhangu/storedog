@@ -106,18 +106,19 @@ services:
       - storedog-network
     labels:
       com.datadoghq.ad.logs: '[{"source": "python"}]'
-      # com.datadoghq.ad.logs: '[
-      # {
-      #   "source": "python",
-      #   "service": "store-discounts",
-      #   "log_processing_rules": [
+      # "log_processing_rules": [
       #     {
       #       "type": "multi_line",
       #       "name": "combine_multiline_queries",
       #       "pattern": "^\\d+-\\d+-\\d+T\\d+:\\d+:\\d+(\\.\\d+)?(Z\\d*:?\\d*)?"
+      #     },
+      #     {
+      #       "type": "mask_sequences",
+      #       "name": "remove_invalid_characters", # Log Processing Rule
+      #       "replace_placeholder": "", # empty string
+      #       "pattern": "(\\x9B|\\x1B\\[)[0-?]*[ -\\/]*[@-~]" # matches the kinds of color codes in Python logs, such as "[37m]"
       #     }
       #   ]
-      # }]'
   ads:
     image: ghcr.io/datadog/storedog/ads-java:${STOREDOG_IMAGE_VERSION:-latest}
     depends_on:
